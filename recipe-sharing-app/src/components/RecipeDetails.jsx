@@ -6,27 +6,20 @@ import EditRecipeForm from './EditRecipeForm';
 
 const RecipeDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const recipe = useRecipeStore(state =>
     state.recipes.find(recipe => String(recipe.id) === String(id))
   );
-  const deleteRecipe = useRecipeStore(state => state.deleteRecipe);
 
   if (!recipe) {
     return <p>Recipe not found!</p>;
   }
 
-  const handleDelete = () => {
-    deleteRecipe(recipe.id);
-    navigate('/');
-  };
-
   return (
     <div>
       <EditRecipeForm />
       {/* <button onClick={handleDelete}>Delete</button> */}
-      <DeleteRecipeButton onDelete={handleDelete} />
+      <DeleteRecipeButton />
     </div>
   );
 };
