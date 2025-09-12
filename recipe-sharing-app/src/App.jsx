@@ -1,14 +1,14 @@
 import './App.css'
-import RecipeList from './components/RecipeList';
-import AddRecipeForm from './components/AddRecipeForm'
-
+import Home from './components/Home.jsx'
+import { Routes, Route } from 'react-router-dom'
+import RecipeDetails from './components/RecipeDetails.jsx'
 function App() {
 
   return (
-    <>
-    <AddRecipeForm />
-     <RecipeList />
-    </>
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path="/recipe/:id" element={<RecipeDetails />} />
+    </Routes>
   )
 }
 
