@@ -21,7 +21,8 @@ const EditRecipeForm = () => {
         }
     }, [recipe]);
 
-    const handleEdit = () => { 
+    const handleEdit = (event) => { 
+        event.preventDefault();
         if (isEditing) {
             updateRecipe(recipe.id, form);
         }
