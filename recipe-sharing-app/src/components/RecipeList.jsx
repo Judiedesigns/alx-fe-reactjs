@@ -28,6 +28,8 @@ const RecipeList = () => {
           </Link>
         ))
       )}
+
+      <Link to='/add-recipe'>Add new recipe</Link>
     </div>
   );
 };

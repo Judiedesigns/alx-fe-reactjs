@@ -1,6 +1,7 @@
 // AddRecipeForm component
   import { useState } from 'react';
   import useRecipeStore from './recipeStore';
+  import { Link } from 'react-router-dom';
 
   const AddRecipeForm = () => {
     const addRecipe = useRecipeStore(state => state.addRecipe);
@@ -15,20 +16,24 @@
     };
 
     return (
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-        />
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-        />
-        <button type="submit">Add Recipe</button>
-      </form>
+      <>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+          />
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+          />
+          <button type="submit">Add Recipe</button>
+        </form>
+
+        <Link to='/'>View recipes</Link>
+      </>
     );
 };
 
