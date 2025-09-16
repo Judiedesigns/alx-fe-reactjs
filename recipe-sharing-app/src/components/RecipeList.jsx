@@ -1,33 +1,35 @@
 import useRecipeStore from './recipeStore';
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 
 const RecipeList = () => {
-const recipes = useRecipeStore(state => state.recipes);
-const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
-const searchTerm = useRecipeStore(state => state.searchTerm);  
-const navigate = useNavigate();
+  const recipes = useRecipeStore(state => state.recipes);
+  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
+  const searchTerm = useRecipeStore(state => state.searchTerm);
 
-const displayList = searchTerm ? filteredRecipes : recipes;
+  const displayList = searchTerm ? filteredRecipes : recipes;
 
-return (
+  return (
     <div>
-        <SearchBar />
-        {displayList.length === 0 ? (
-            <p>No recipes found.</p>
-        ) : (
-            displayList.map(recipe => (
-                <div 
-                    key={recipe.id} 
-                    onClick={() => navigate(`/recipe/${recipe.id}`)}
-                    style={{ cursor: 'pointer', marginBottom: '1rem' }}
-                >
-                    <h3>{recipe.title}</h3>
-                    <p>{recipe.description}</p>
-                </div>
-            ))
-        )}
+      <SearchBar />
+
+      {displayList.length === 0 ? (
+        <p>No recipes found.</p>
+      ) : (
+        displayList.map(recipe => (
+          <Link
+            key={recipe.id}
+            to={`/recipe/${recipe.id}`}
+          >
+            <div>
+              <h3>{recipe.title}</h3>
+              <p>{recipe.description}</p>
+            </div>
+          </Link>
+        ))
+      )}
     </div>
-);
+  );
 };
-export default RecipeList
+
+export default RecipeList;
