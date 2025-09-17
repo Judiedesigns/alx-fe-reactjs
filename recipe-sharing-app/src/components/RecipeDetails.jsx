@@ -18,7 +18,6 @@ const RecipeDetails = () => {
   return (
     <div>
       <EditRecipeForm />
-      {/* <button onClick={handleDelete}>Delete</button> */}
       <DeleteRecipeButton />
     </div>
   );
