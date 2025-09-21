@@ -3,6 +3,8 @@ import { searchGithubUsers, fetchUserData } from "../services/githubService";
 
 function Search() {
   const [query, setQuery] = useState("");
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
   const [results, setResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -10,101 +12,66 @@ function Search() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!query.trim()) return;
-
-    setLoading(true);
-    setError(null);
-    setResults([]);
-    setSelectedUser(null);
-
+    if (!query.trim() && !location.trim() && !minRepos.trim()) return;
+    setLoading(true); setError(null); setResults([]); setSelectedUser(null);
     try {
-      const users = await searchGithubUsers(query);
-      if (users.length === 0) {
-        setError("Looks like we cant find the user");
-      } else {
-        setResults(users);
-      }
-    } catch {
-      setError("API error, please try again later");
-    } finally {
-      setLoading(false);
-    }
+      const users = await searchGithubUsers({ query, location, minRepos });
+      if (users.length === 0) setError("Looks like we cant find the user");
+      else setResults(users);
+    } catch { setError("API error, please try again later"); }
+    finally { setLoading(false); }
   };
 
   const handleUserClick = async (username) => {
-    setLoading(true);
-    setError(null);
-    setSelectedUser(null);
-
-    try {
-      const userData = await fetchUserData(username);
-      setSelectedUser(userData);
-    } catch {
-      setError("Failed to fetch user details");
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true); setError(null); setSelectedUser(null);
+    try { setSelectedUser(await fetchUserData(username)); }
+    catch { setError("Failed to fetch user details"); }
+    finally { setLoading(false); }
   };
 
   return (
-    <div style={{ margin: "1rem 0" }}>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={query}
-          placeholder="Search GitHub users..."
+    <div className="max-w-3xl mx-auto p-4">
+      <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <input type="text" value={query} placeholder="Search by username"
           onChange={(e) => setQuery(e.target.value)}
-        />
-        <button type="submit">Search</button>
+          className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"/>
+        <input type="text" value={location} placeholder="Location"
+          onChange={(e) => setLocation(e.target.value)}
+          className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"/>
+        <input type="number" value={minRepos} placeholder="Min Repos"
+          onChange={(e) => setMinRepos(e.target.value)}
+          className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"/>
+        <button type="submit"
+          className="md:col-span-3 bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition">Search</button>
       </form>
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <div style={{ marginTop: "1rem" }}>
+      {loading && <p className="text-gray-600">Loading...</p>}
+      {error && <p className="text-red-600">{error}</p>}
+      <div className="space-y-4">
         {results.map((user) => (
-          <div
-            key={user.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "0.5rem",
-              marginBottom: "0.5rem",
-              borderRadius: "8px",
-              cursor: "pointer"
-            }}
-            onClick={() => handleUserClick(user.login)}
-          >
-            <img
-              src={user.avatar_url}
-              alt={user.login}
-              width="50"
-              height="50"
-              style={{ borderRadius: "50%" }}
-            />
-            <span style={{ marginLeft: "0.5rem" }}>{user.login}</span>
+          <div key={user.id} className="flex items-center border rounded-lg p-4 shadow hover:shadow-md transition cursor-pointer"
+            onClick={() => handleUserClick(user.login)}>
+            <img src={user.avatar_url} alt={user.login} className="w-12 h-12 rounded-full"/>
+            <div className="ml-4">
+              <p className="font-semibold">{user.login}</p>
+              <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">View Profile</a>
+            </div>
           </div>
         ))}
       </div>
-
       {selectedUser && (
-        <div style={{ marginTop: "1rem", border: "1px solid #ddd", padding: "1rem" }}>
-          <h2>{selectedUser.login}</h2>
-          <img
-            src={selectedUser.avatar_url}
-            alt={selectedUser.login}
-            width="100"
-            style={{ borderRadius: "50%" }}
-          />
+        <div className="mt-6 border rounded-lg p-6 shadow">
+          <h2 className="text-xl font-bold">{selectedUser.login}</h2>
+          <img src={selectedUser.avatar_url} alt={selectedUser.login} className="w-24 h-24 rounded-full my-2"/>
           <p>Name: {selectedUser.name || "N/A"}</p>
+          <p>Location: {selectedUser.location || "N/A"}</p>
+          <p>Public Repos: {selectedUser.public_repos}</p>
           <p>Followers: {selectedUser.followers}</p>
           <p>Following: {selectedUser.following}</p>
-          <a href={selectedUser.html_url} target="_blank" rel="noopener noreferrer">
-            View GitHub Profile
-          </a>
+          <a href={selectedUser.html_url} target="_blank" rel="noopener noreferrer"
+            className="text-blue-600 hover:underline mt-2 block">View GitHub Profile</a>
         </div>
       )}
     </div>
   );
 }
-
 export default Search;

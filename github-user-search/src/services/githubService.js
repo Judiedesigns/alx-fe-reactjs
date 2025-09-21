@@ -3,12 +3,12 @@ import axios from "axios";
 const BASE_URL = "https://api.github.com";
 const api = axios.create({ baseURL: BASE_URL });
 
-/**
- * Search GitHub users by query string
- */
-export async function searchGithubUsers(query) {
+export async function searchGithubUsers({ query, location, minRepos }) {
   try {
-    const { data } = await api.get("/search/users", { params: { q: query } });
+    let q = query || "";
+    if (location) q += `+location:${location}`;
+    if (minRepos) q += `+repos:>=${minRepos}`;
+    const { data } = await api.get("/search/users", { params: { q } });
     return data.items || [];
   } catch (error) {
     console.error("GitHub API search error:", error.message);
@@ -16,9 +16,6 @@ export async function searchGithubUsers(query) {
   }
 }
 
-/**
- * Fetch details for a single GitHub user
- */
 export async function fetchUserData(username) {
   try {
     const { data } = await api.get(`/users/${username}`);
