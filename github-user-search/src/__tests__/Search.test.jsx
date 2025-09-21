@@ -39,3 +39,27 @@ describe("Search Component", () => {
     });
   });
 });
+
+test("shows error when fetchUserData fails", async () => {
+  githubService.searchGithubUsers.mockResolvedValue([
+    { id: 1, login: "octocat", avatar_url: "https://avatar.com/octo.png", html_url: "https://github.com/octocat" },
+  ]);
+
+  githubService.fetchUserData.mockRejectedValue(new Error("API error"));
+
+  render(<Search />);
+  fireEvent.change(screen.getByPlaceholderText(/search github users/i), {
+    target: { value: "octocat" },
+  });
+  fireEvent.submit(screen.getByRole("button", { name: /search/i }));
+
+  await waitFor(() => {
+    expect(screen.getByText("octocat")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText("octocat"));
+
+  await waitFor(() => {
+    expect(screen.getByText(/failed to fetch user details/i)).toBeInTheDocument();
+  });
+});
