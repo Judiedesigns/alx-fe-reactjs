@@ -18,7 +18,7 @@ function Search() {
     try {
       const users = await searchGithubUsers(query);
       if (users.length === 0) {
-        setError("Looks like we can't find the user");
+        setError("Looks like we cant find the user");
       } else {
         setResults(users);
       }
