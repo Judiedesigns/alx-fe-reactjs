@@ -1,19 +1,20 @@
 import { useState } from "react";
-import { searchGithubUsers } from "../services/githubService";
+import { fetchUserData } from "../services/githubService";
 
 function Search() {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
+  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const data = await searchGithubUsers(query);
-      setResults(data);
+      const data = await fetchUserData(query);
+      setUser(data);
       setError(null);
     } catch (err) {
-      setError("Failed to fetch results");
+      setUser(null);
+      setError("User not found or API error");
     }
   };
 
@@ -23,7 +24,7 @@ function Search() {
         <input
           type="text"
           value={query}
-          placeholder="Search..."
+          placeholder="Search GitHub username..."
           onChange={(e) => setQuery(e.target.value)}
         />
         <button type="submit">Search</button>
@@ -31,12 +32,17 @@ function Search() {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <ul>
-        {results.map((item) => (
-          <li key={item.id}>{item.title || item.name}</li>
-        ))}
-      </ul>
+      {user && (
+        <div style={{ marginTop: "1rem", border: "1px solid #ccc", padding: "1rem", borderRadius: "8px" }}>
+          <img src={user.avatar_url} alt={user.login} width="80" height="80" style={{ borderRadius: "50%" }} />
+          <h3>{user.login}</h3>
+          <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+            View Profile
+          </a>
+        </div>
+      )}
     </div>
   );
 }
+
 export default Search;
