@@ -1,34 +1,77 @@
-import axios from "axios";
+import { useState } from "react";
+import { searchGithubUsers } from "../services/githubService";
 
-const BASE_URL = "https://api.github.com";
-const api = axios.create({ baseURL: BASE_URL });
+function Search() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-/**
- * Search GitHub users by query string
- * @param {string} query - GitHub username search string
- * @returns {Promise<Array>} list of users
- */
-export async function searchGithubUsers(query) {
-  try {
-    const { data } = await api.get(`/search/users`, { params: { q: query } });
-    return data.items || [];
-  } catch (error) {
-    console.error("GitHub API search error:", error.message);
-    throw new Error("Failed to fetch GitHub users");
-  }
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+
+    setLoading(true);
+    setError(null);
+    setResults([]);
+
+    try {
+      const users = await searchGithubUsers(query);
+      if (users.length === 0) {
+        setError("Looks like we can't find the user");
+      } else {
+        setResults(users);
+      }
+    } catch (err) {
+      setError("API error, please try again later");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ margin: "1rem 0" }}>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          value={query}
+          placeholder="Search GitHub users..."
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <div style={{ marginTop: "1rem" }}>
+        {results.map((user) => (
+          <div
+            key={user.id}
+            style={{
+              border: "1px solid #ccc",
+              padding: "0.5rem",
+              marginBottom: "0.5rem",
+              borderRadius: "8px",
+            }}
+          >
+            <img
+              src={user.avatar_url}
+              alt={user.login}
+              width="50"
+              height="50"
+              style={{ borderRadius: "50%" }}
+            />
+            <span style={{ marginLeft: "0.5rem" }}>{user.login}</span>
+            {" - "}
+            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+              View Profile
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-/**
- * Fetch details for a single GitHub user
- * @param {string} username - GitHub username
- * @returns {Promise<Object>} user details
- */
-export async function fetchUserData(username) {
-  try {
-    const { data } = await api.get(`/users/${username}`);
-    return data;
-  } catch (error) {
-    console.error("GitHub API user error:", error.message);
-    throw new Error("Failed to fetch GitHub user data");
-  }
-}
+export default Search;
