@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+import { searchGithubUsers } from "../services/githubService";
 
 function Search() {
   const [query, setQuery] = useState("");
-  const [user, setUser] = useState(null);
+  const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const data = await fetchUserData(query);
-      setUser(data);
+      const users = await searchGithubUsers(query);
+      setResults(users);
       setError(null);
     } catch (err) {
-      setUser(null);
-      setError("User not found or API error");
+      setResults([]);
+      setError("No users found or API error");
     }
   };
 
@@ -24,7 +24,7 @@ function Search() {
         <input
           type="text"
           value={query}
-          placeholder="Search GitHub username..."
+          placeholder="Search GitHub users..."
           onChange={(e) => setQuery(e.target.value)}
         />
         <button type="submit">Search</button>
@@ -32,15 +32,18 @@ function Search() {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {user && (
-        <div style={{ marginTop: "1rem", border: "1px solid #ccc", padding: "1rem", borderRadius: "8px" }}>
-          <img src={user.avatar_url} alt={user.login} width="80" height="80" style={{ borderRadius: "50%" }} />
-          <h3>{user.login}</h3>
-          <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-            View Profile
-          </a>
-        </div>
-      )}
+      <div style={{ marginTop: "1rem" }}>
+        {results.map((user) => (
+          <div key={user.id} style={{ border: "1px solid #ccc", padding: "0.5rem", marginBottom: "0.5rem", borderRadius: "8px" }}>
+            <img src={user.avatar_url} alt={user.login} width="50" height="50" style={{ borderRadius: "50%" }} />
+            <span style={{ marginLeft: "0.5rem" }}>{user.login}</span>
+            {" - "}
+            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+              View Profile
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
