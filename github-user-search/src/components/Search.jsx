@@ -1,31 +1,21 @@
 import { useState } from "react";
-import { searchGithubUsers, fetchUserData } from "../services/githubService";
+import { fetchUserData } from "../services/githubService";
 
 function Search() {
   const [query, setQuery] = useState("");
-  const [location, setLocation] = useState("");
-  const [minRepos, setMinRepos] = useState("");
   const [results, setResults] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!query.trim() && !location.trim() && !minRepos.trim()) return;
-    setLoading(true); setError(null); setResults([]); setSelectedUser(null);
+    if (!query.trim()) return;
+    setLoading(true); setError(null); setResults([]);
     try {
-      const users = await searchGithubUsers({ query, location, minRepos });
-      if (users.length === 0) setError("Looks like we cant find the user");
-      else setResults(users);
+      const users = await fetchUserData(query);
+      if (!users) setError("Looks like we cant find the user");
+      else setResults([users]);
     } catch { setError("API error, please try again later"); }
-    finally { setLoading(false); }
-  };
-
-  const handleUserClick = async (username) => {
-    setLoading(true); setError(null); setSelectedUser(null);
-    try { setSelectedUser(await fetchUserData(username)); }
-    catch { setError("Failed to fetch user details"); }
     finally { setLoading(false); }
   };
 
@@ -35,12 +25,6 @@ function Search() {
         <input type="text" value={query} placeholder="Search by username"
           onChange={(e) => setQuery(e.target.value)}
           className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"/>
-        <input type="text" value={location} placeholder="Location"
-          onChange={(e) => setLocation(e.target.value)}
-          className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"/>
-        <input type="number" value={minRepos} placeholder="Min Repos"
-          onChange={(e) => setMinRepos(e.target.value)}
-          className="border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"/>
         <button type="submit"
           className="md:col-span-3 bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition">Search</button>
       </form>
@@ -48,8 +32,7 @@ function Search() {
       {error && <p className="text-red-600">{error}</p>}
       <div className="space-y-4">
         {results.map((user) => (
-          <div key={user.id} className="flex items-center border rounded-lg p-4 shadow hover:shadow-md transition cursor-pointer"
-            onClick={() => handleUserClick(user.login)}>
+          <div key={user.id} className="flex items-center border rounded-lg p-4 shadow hover:shadow-md transition">
             <img src={user.avatar_url} alt={user.login} className="w-12 h-12 rounded-full"/>
             <div className="ml-4">
               <p className="font-semibold">{user.login}</p>
@@ -58,7 +41,7 @@ function Search() {
           </div>
         ))}
       </div>
-      {selectedUser && (
+      {/* {selectedUser && (
         <div className="mt-6 border rounded-lg p-6 shadow">
           <h2 className="text-xl font-bold">{selectedUser.login}</h2>
           <img src={selectedUser.avatar_url} alt={selectedUser.login} className="w-24 h-24 rounded-full my-2"/>
@@ -70,7 +53,7 @@ function Search() {
           <a href={selectedUser.html_url} target="_blank" rel="noopener noreferrer"
             className="text-blue-600 hover:underline mt-2 block">View GitHub Profile</a>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
