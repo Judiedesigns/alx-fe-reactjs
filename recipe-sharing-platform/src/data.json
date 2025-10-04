@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+    "image": "https://sitiorandom.com/wp-content/uploads/2024/08/Goldfish-2-e1724099193229.webp"
+  },
+  {
+    "id": 2,
+    "title": "Chicken Tikka Masala",
+    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
+    "image": "https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_1280.jpg"
+  },
+    {
+        "id": 3,
+        "title": "Spaghetti Carbonara",
+        "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+        "image": "https://sitiorandom.com/wp-content/uploads/2024/08/Goldfish-2-e1724099193229.webp"
+    },
+  {
+    "id": 4,
+    "title": "Chicken Tikka Masala",
+    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
+    "image": "https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_1280.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+    "image": "https://sitiorandom.com/wp-content/uploads/2024/08/Goldfish-2-e1724099193229.webp"
+  },
+  {
+    "id": 6,
+    "title": "Chicken Tikka Masala",
+    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
+    "image": "https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_1280.jpg"
+  }
+]
