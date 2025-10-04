@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useState,useEffect, use } from "react";
 import data from "../data.json";
 const Homepage = () => {
   const [recipes, setRecipes] = useState([]);
 
+//   useEffect(() => {
+//     setRecipes(data);
+//   }, []);
+
+    useEffect(() => {
+        fetch('data.json')
+          .then((response) => response.json())
+          .then((data) => setRecipes(data))
+          .catch((error) => console.error('Error fetching data:', error));
+      }, []);
   return (
     <div>
       <h1 className="text-2xl font-bold">Recipe Sharing Platform</h1>
