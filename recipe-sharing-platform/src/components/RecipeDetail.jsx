@@ -17,18 +17,17 @@ function RecipeDetail() {
         <div className="block float-start">
             <Link to="/" className="text-blue-500 hover:underline cursor-pointer">Back to home</Link>
         </div>
-        <p>Recipe Detail for ID: {id}</p>
-        <h1>{recipe.title}</h1>
-        <p>{recipe.summary}</p>
-        <img src={recipe.image} alt={recipe.title} />
+        <h1 className="text-2xl font-bold">{recipe.title}</h1>
+        <p className="my-5">{recipe.summary}</p>
+        <img src={recipe.image} alt={recipe.title} className="w-[540px] h-auto mx-auto shadow-md mb-4" />
         <h2>Ingredients:</h2>
-        <ul>
+        <ul >
           {recipe.ingredients.map((ingredient, index) => (
             <li key={index}>{ingredient}</li>
           ))}
         </ul>
         <h2>Instructions:</h2>
-        <ol>
+        <ol className="max-w-3xl mx-auto ">
           {recipe.instructions.map((instruction, index) => (
             <li key={index}>{instruction}</li>
           ))}
