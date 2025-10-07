@@ -14,6 +14,18 @@ function RecipeDetail() {
         <h1>{recipe.title}</h1>
         <p>{recipe.summary}</p>
         <img src={recipe.image} alt={recipe.title} />
+        <h2>Ingredients:</h2>
+        <ul>
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
+        </ul>
+        <h2>Instructions:</h2>
+        <ol>
+          {recipe.instructions.map((instruction, index) => (
+            <li key={index}>{instruction}</li>
+          ))}
+        </ol>
     </div>
   );
 }
