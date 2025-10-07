@@ -11,12 +11,12 @@
     "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
     "image": "https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_1280.jpg"
   },
-    {
-        "id": 3,
-        "title": "Spaghetti Carbonara",
-        "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-        "image": "https://sitiorandom.com/wp-content/uploads/2024/08/Goldfish-2-e1724099193229.webp"
-    },
+  {
+      "id": 3,
+      "title": "Spaghetti Carbonara",
+      "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+      "image": "https://sitiorandom.com/wp-content/uploads/2024/08/Goldfish-2-e1724099193229.webp"
+  },
   {
     "id": 4,
     "title": "Chicken Tikka Masala",
