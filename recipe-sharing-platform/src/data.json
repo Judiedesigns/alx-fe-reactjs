@@ -78,18 +78,69 @@
     "id": 4,
     "title": "Chicken Tikka Masala",
     "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_1280.jpg"
+    "image": "https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_1280.jpg",
+          "ingredients": [
+      "200g spaghetti",
+      "100g pancetta or bacon, diced",
+      "2 large eggs",
+      "50g Pecorino Romano cheese, grated",
+      "50g Parmesan cheese, grated",
+      "2 cloves garlic, peeled and left whole",
+      "Salt and black pepper to taste",
+      "Fresh parsley, chopped (optional)"
+    ],
+    "instructions": [
+      "Cook the spaghetti in a large pot of salted boiling water until al dente. Reserve 1 cup of pasta water, then drain the pasta.",
+      "In a large skillet, cook the pancetta or bacon over medium heat until crispy. Add the garlic cloves and cook for 1-2 minutes to infuse the oil, then remove the garlic.",
+      "In a bowl, whisk together the eggs, Pecorino Romano, and Parmesan cheese. Season with a pinch of salt and a generous amount of black pepper.",
+      "Add the cooked spaghetti to the skillet with the pancetta. Remove the skillet from heat and quickly pour in the egg and cheese mixture, tossing rapidly to coat the pasta without scrambling the eggs. Add reserved pasta water a little at a time to achieve a creamy consistency.",
+      "Serve immediately, garnished with extra cheese and chopped parsley if desired."
+    ]
   },
   {
     "id": 5,
     "title": "Spaghetti Carbonara",
     "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-    "image": "https://sitiorandom.com/wp-content/uploads/2024/08/Goldfish-2-e1724099193229.webp"
+    "image": "https://sitiorandom.com/wp-content/uploads/2024/08/Goldfish-2-e1724099193229.webp",
+          "ingredients": [
+      "200g spaghetti",
+      "100g pancetta or bacon, diced",
+      "2 large eggs",
+      "50g Pecorino Romano cheese, grated",
+      "50g Parmesan cheese, grated",
+      "2 cloves garlic, peeled and left whole",
+      "Salt and black pepper to taste",
+      "Fresh parsley, chopped (optional)"
+    ],
+    "instructions": [
+      "Cook the spaghetti in a large pot of salted boiling water until al dente. Reserve 1 cup of pasta water, then drain the pasta.",
+      "In a large skillet, cook the pancetta or bacon over medium heat until crispy. Add the garlic cloves and cook for 1-2 minutes to infuse the oil, then remove the garlic.",
+      "In a bowl, whisk together the eggs, Pecorino Romano, and Parmesan cheese. Season with a pinch of salt and a generous amount of black pepper.",
+      "Add the cooked spaghetti to the skillet with the pancetta. Remove the skillet from heat and quickly pour in the egg and cheese mixture, tossing rapidly to coat the pasta without scrambling the eggs. Add reserved pasta water a little at a time to achieve a creamy consistency.",
+      "Serve immediately, garnished with extra cheese and chopped parsley if desired."
+    ]
   },
   {
     "id": 6,
     "title": "Chicken Tikka Masala",
     "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_1280.jpg"
+    "image": "https://cdn.pixabay.com/photo/2021/12/12/20/00/play-6865967_1280.jpg",
+          "ingredients": [
+      "200g spaghetti",
+      "100g pancetta or bacon, diced",
+      "2 large eggs",
+      "50g Pecorino Romano cheese, grated",
+      "50g Parmesan cheese, grated",
+      "2 cloves garlic, peeled and left whole",
+      "Salt and black pepper to taste",
+      "Fresh parsley, chopped (optional)"
+    ],
+    "instructions": [
+      "Cook the spaghetti in a large pot of salted boiling water until al dente. Reserve 1 cup of pasta water, then drain the pasta.",
+      "In a large skillet, cook the pancetta or bacon over medium heat until crispy. Add the garlic cloves and cook for 1-2 minutes to infuse the oil, then remove the garlic.",
+      "In a bowl, whisk together the eggs, Pecorino Romano, and Parmesan cheese. Season with a pinch of salt and a generous amount of black pepper.",
+      "Add the cooked spaghetti to the skillet with the pancetta. Remove the skillet from heat and quickly pour in the egg and cheese mixture, tossing rapidly to coat the pasta without scrambling the eggs. Add reserved pasta water a little at a time to achieve a creamy consistency.",
+      "Serve immediately, garnished with extra cheese and chopped parsley if desired."
+    ]
   }
 ]
