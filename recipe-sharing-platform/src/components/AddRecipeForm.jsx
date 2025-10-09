@@ -27,7 +27,7 @@ const AddRecipeForm = () => {
     };
 
     return (
-        <form className="flex flex-col gap-4 max-w-lg mx-auto">
+        <form className="flex flex-col gap-4 max-w-lg mx-auto" onSubmit={handleSubmit}>
             <div>
                 <label className="block mb-2 font-bold">Recipe Title: <span className="text-red-500">*</span></label>
                 <input 
@@ -59,7 +59,7 @@ const AddRecipeForm = () => {
                     onChange={(e) => setPreparationSteps(e.target.value)}
                 ></textarea>
             </div>
-            <button onClick={handleSubmit} className="bg-blue-500 text-white py-2 px-4 rounded w-fit mx-auto hover:bg-blue-800">Add Recipe</button>
+            <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded w-fit mx-auto hover:bg-blue-800">Add Recipe</button>
         </form>
     );
 };
