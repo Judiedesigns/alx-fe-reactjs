@@ -3,7 +3,7 @@ import { useState } from "react";
 const AddRecipeForm = () => {
     const [title, setTitle] = useState("");
     const [ingredients, setIngredients] = useState("");
-    const [preparationSteps, setPreparationSteps] = useState("");
+    const [steps, setSteps] = useState("");
     const [errors, setErrors] = useState(false);
 
     const handleSubmit = (event) => {
@@ -55,9 +55,9 @@ const AddRecipeForm = () => {
                 <textarea 
                     placeholder="Enter Preparation Steps" 
                     className="border p-2 border-black outline-none focus:border-red-600 resize-none" 
-                    name='preparationSteps' 
-                    value={preparationSteps}
-                    onChange={(e) => setPreparationSteps(e.target.value)}
+                    name='steps' 
+                    value={steps}
+                    onChange={(e) => setSteps(e.target.value)}
                 ></textarea>
             </div>
             {errors && <p className="text-red-500">Please fill in all required fields.</p>}
