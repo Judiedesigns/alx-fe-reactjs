@@ -20,6 +20,8 @@ const PostsComponent = () => {
     queryFn: fetchPosts,
     staleTime: 1000 * 60 * 5, // 5 minutes (data considered fresh)
     cacheTime: 1000 * 60 * 10, // cache kept for 10 minutes
+    refetchOnWindowFocus: true, // refetch when user comes back to tab
+    keepPreviousData: true, 
   });
 
   if (isLoading) return <p>Loading posts...</p>;
