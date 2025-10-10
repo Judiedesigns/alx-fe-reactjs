@@ -1,44 +1,58 @@
 import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 
-const FormikForm = () => {
+const RegistrationForm = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [errors, setErrors] = useState({});
 
-  const validate = (values) => {
+  // ✅ Manual validation function
+  const validateForm = () => {
     const newErrors = {};
-    if (!values.username.trim()) newErrors.username = "Username is required";
-    if (!values.email.trim()) newErrors.email = "Email is required";
-    if (!values.password.trim()) newErrors.password = "Password is required";
-    return newErrors;
+    if (!username.trim()) newErrors.username = "Username is required";
+    if (!email.trim()) newErrors.email = "Email is required";
+    if (!password.trim()) newErrors.password = "Password is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (values, { resetForm }) => {
-    const validationErrors = validate(values);
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    if (!validateForm()) {
+      // ❌ Stop submission if validation fails
       return;
     }
 
-    setErrors({});
+    // ✅ All good — proceed
     console.log("Form submitted successfully:", values);
+    setFormData(values);
+    setErrors({});
     resetForm();
+    setUsername("");
+    setEmail("");
+    setPassword("");
   };
 
   return (
     <Formik
-      initialValues={{ username: "", email: "", password: "" }}
+      initialValues={formData}
       onSubmit={handleSubmit}
     >
-      {({ values, handleChange }) => (
+      {() => (
         <Form className="flex flex-col gap-4 max-w-md mx-auto mt-6">
+          {/* Username */}
           <div>
             <label className="block font-bold mb-1">Username:</label>
             <Field
               type="text"
               name="username"
-              value={values.username}
-              onChange={handleChange}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="border border-gray-400 p-2 rounded w-full"
               placeholder="Enter your username"
             />
@@ -47,13 +61,14 @@ const FormikForm = () => {
             )}
           </div>
 
+          {/* Email */}
           <div>
             <label className="block font-bold mb-1">Email:</label>
             <Field
               type="email"
               name="email"
-              value={values.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="border border-gray-400 p-2 rounded w-full"
               placeholder="Enter your email"
             />
@@ -62,13 +77,14 @@ const FormikForm = () => {
             )}
           </div>
 
+          {/* Password */}
           <div>
             <label className="block font-bold mb-1">Password:</label>
             <Field
               type="password"
               name="password"
-              value={values.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="border border-gray-400 p-2 rounded w-full"
               placeholder="Enter your password"
             />
@@ -89,4 +105,4 @@ const FormikForm = () => {
   );
 };
 
-export default FormikForm;
+export default RegistrationForm;
