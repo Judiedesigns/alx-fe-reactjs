@@ -6,7 +6,7 @@ const AddRecipeForm = () => {
     const [preparationSteps, setPreparationSteps] = useState("");
     const [errors, setErrors] = useState(false);
 
-    const validate = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
         if (title.trim() === "") {
@@ -28,7 +28,7 @@ const AddRecipeForm = () => {
     };
 
     return (
-        <form className="flex flex-col gap-4 max-w-lg mx-auto" onSubmit={validate}>
+        <form className="flex flex-col gap-4 max-w-lg mx-auto" onSubmit={handleSubmit}>
             <div>
                 <label className="block mb-2 font-bold">Recipe Title: <span className="text-red-500">*</span></label>
                 <input 
