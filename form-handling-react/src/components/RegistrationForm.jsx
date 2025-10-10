@@ -1,34 +1,39 @@
 import React, { useState } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object({
+  username: Yup.string().required("Username is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
 
 const RegistrationForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
-
-  // ✅ Manual validation function
-  const validateForm = () => {
-    const newErrors = {};
-    if (!username.trim()) newErrors.username = "Username is required";
-    if (!email.trim()) newErrors.email = "Email is required";
-    if (!password.trim()) newErrors.password = "Password is required";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleSubmit = (values, { resetForm }) => {
-    if (!validateForm()) {
-      // ❌ Stop submission if validation fails
+    let newErrors = {};
+
+    if (!username) newErrors.username = "Username is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
-    // ✅ All good — proceed
     console.log("Form submitted successfully:", values);
     setFormData(values);
     setErrors({});
@@ -41,55 +46,83 @@ const RegistrationForm = () => {
   return (
     <Formik
       initialValues={formData}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {() => (
+      {({ handleChange }) => (
         <Form className="flex flex-col gap-4 max-w-md mx-auto mt-6">
-          {/* Username */}
           <div>
             <label className="block font-bold mb-1">Username:</label>
             <Field
               type="text"
               name="username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                handleChange(e);
+              }}
               className="border border-gray-400 p-2 rounded w-full"
-              placeholder="Enter your username"
             />
-            {errors.username && (
-              <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+            {(errors.username || (
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            )) && (
+              <div className="text-red-500 text-sm">
+                {errors.username}
+              </div>
             )}
           </div>
 
-          {/* Email */}
           <div>
             <label className="block font-bold mb-1">Email:</label>
             <Field
               type="email"
               name="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                handleChange(e);
+              }}
               className="border border-gray-400 p-2 rounded w-full"
-              placeholder="Enter your email"
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            {(errors.email || (
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            )) && (
+              <div className="text-red-500 text-sm">
+                {errors.email}
+              </div>
             )}
           </div>
 
-          {/* Password */}
           <div>
             <label className="block font-bold mb-1">Password:</label>
             <Field
               type="password"
               name="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                handleChange(e);
+              }}
               className="border border-gray-400 p-2 rounded w-full"
-              placeholder="Enter your password"
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            {(errors.password || (
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            )) && (
+              <div className="text-red-500 text-sm">
+                {errors.password}
+              </div>
             )}
           </div>
 
