@@ -4,25 +4,23 @@ const AddRecipeForm = () => {
     const [title, setTitle] = useState("");
     const [ingredients, setIngredients] = useState("");
     const [steps, setSteps] = useState("");
-    const [errors, setErrors] = useState(false);
+    const [errors, setErrors] = useState({});
+
+    const validate = () => {
+        const newErrors = {};
+
+        if (title.trim() === "") newErrors.title = "Recipe title is required.";
+        if (ingredients.trim() === "") newErrors.ingredients = "Ingredients are required.";
+        if (steps.trim() === "") newErrors.steps = "Preparation steps are required.";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (title.trim() === "") {
-            setErrors(true);
-            return;
-        }
-
-        if (ingredients.trim() === "") {
-            setErrors(true);
-            return;
-        }
-        
-        if (preparationSteps.trim() === "") {
-            setErrors(true);
-            return;
-        }
+        if (!validate()) return;
 
         alert('Form submitted!');
     };
@@ -39,6 +37,7 @@ const AddRecipeForm = () => {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
+                {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
             </div>
             <div>
                 <label className="block mb-2 font-bold">Ingredients:</label>
@@ -49,6 +48,7 @@ const AddRecipeForm = () => {
                     value={ingredients}
                     onChange={(e) => setIngredients(e.target.value)}
                 ></textarea>
+                {errors.ingredients && <p className="text-red-500 text-sm">{errors.ingredients}</p>}
             </div>
             <div>
                 <label className="block mb-2 font-bold">Preparation Steps:</label>
@@ -59,8 +59,8 @@ const AddRecipeForm = () => {
                     value={steps}
                     onChange={(e) => setSteps(e.target.value)}
                 ></textarea>
+                {errors.steps && <p className="text-red-500 text-sm">{errors.steps}</p>}
             </div>
-            {errors && <p className="text-red-500">Please fill in all required fields.</p>}
             <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded w-fit mx-auto hover:bg-blue-800">Add Recipe</button>
         </form>
     );
