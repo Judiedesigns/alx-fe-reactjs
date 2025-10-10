@@ -1,34 +1,34 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-
-const validationSchema = Yup.object({
-  username: Yup.string().required("Username is required"),
-  email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  password: Yup.string().required("Password is required"),
-});
+import { Formik, Form, Field } from "formik";
 
 const FormikForm = () => {
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [formData, setFormData] = useState({
-        username: username,
-        email: email,
-        password: password,
-    });
+  const [errors, setErrors] = useState({});
+
+  const validate = (values) => {
+    const newErrors = {};
+    if (!values.username.trim()) newErrors.username = "Username is required";
+    if (!values.email.trim()) newErrors.email = "Email is required";
+    if (!values.password.trim()) newErrors.password = "Password is required";
+    return newErrors;
+  };
+
+  const handleSubmit = (values, { resetForm }) => {
+    const validationErrors = validate(values);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
+    console.log("Form submitted successfully:", values);
+    resetForm();
+  };
 
   return (
     <Formik
-      initialValues={formData}
-      validationSchema={validationSchema}
-      onSubmit={(values, { resetForm }) => {
-        console.log("Form submitted successfully:", values);
-        setFormData(values); // update useState with formik values
-        resetForm();
-      }}
+      initialValues={{ username: "", email: "", password: "" }}
+      onSubmit={handleSubmit}
     >
       {({ values, handleChange }) => (
         <Form className="flex flex-col gap-4 max-w-md mx-auto mt-6">
@@ -37,19 +37,14 @@ const FormikForm = () => {
             <Field
               type="text"
               name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            //   onChange={(e) => {
-            //     handleChange(e);
-            //     setFormData({ ...formData, username: e.target.value });
-            //   }}
+              value={values.username}
+              onChange={handleChange}
               className="border border-gray-400 p-2 rounded w-full"
+              placeholder="Enter your username"
             />
-            <ErrorMessage
-              name="username"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+            {errors.username && (
+              <p className="text-red-500 text-sm mt-1">{errors.username}</p>
+            )}
           </div>
 
           <div>
@@ -57,19 +52,14 @@ const FormikForm = () => {
             <Field
               type="email"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            //   onChange={(e) => {
-            //     handleChange(e);
-            //     setFormData({ ...formData, email: e.target.value });
-            //   }}
+              value={values.email}
+              onChange={handleChange}
               className="border border-gray-400 p-2 rounded w-full"
+              placeholder="Enter your email"
             />
-            <ErrorMessage
-              name="email"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -77,19 +67,14 @@ const FormikForm = () => {
             <Field
               type="password"
               name="password"
-              value={password}
-            //   onChange={(e) => {
-            //     handleChange(e);
-            //     setFormData({ ...formData, password: e.target.value });
-            //   }}
-              onChange={(e) => setPassword(e.target.value)}
+              value={values.password}
+              onChange={handleChange}
               className="border border-gray-400 p-2 rounded w-full"
+              placeholder="Enter your password"
             />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="text-red-500 text-sm"
-            />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
           <button
