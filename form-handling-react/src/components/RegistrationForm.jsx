@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -11,81 +11,86 @@ const validationSchema = Yup.object({
 });
 
 const FormikForm = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
   return (
     <Formik
-      initialValues={{
-        username: "",
-        email: "",
-        password: "",
-      }}
+      initialValues={formData}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
         console.log("Form submitted successfully:", values);
+        setFormData(values); // update useState with formik values
         resetForm();
       }}
     >
-      {({ isSubmitting }) => (
+      {({ values, handleChange }) => (
         <Form className="flex flex-col gap-4 max-w-md mx-auto mt-6">
           <div>
-            <label htmlFor="username" className="block font-bold mb-1">
-              Username:
-            </label>
+            <label className="block font-bold mb-1">Username:</label>
             <Field
               type="text"
-              id="username"
               name="username"
-              placeholder="Enter your username"
+              value={values.username}
+              onChange={(e) => {
+                handleChange(e);
+                setFormData({ ...formData, username: e.target.value });
+              }}
               className="border border-gray-400 p-2 rounded w-full"
             />
             <ErrorMessage
               name="username"
               component="div"
-              className="text-red-500 text-sm mt-1"
+              className="text-red-500 text-sm"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block font-bold mb-1">
-              Email:
-            </label>
+            <label className="block font-bold mb-1">Email:</label>
             <Field
               type="email"
-              id="email"
               name="email"
-              placeholder="Enter your email"
+              value={values.email}
+              onChange={(e) => {
+                handleChange(e);
+                setFormData({ ...formData, email: e.target.value });
+              }}
               className="border border-gray-400 p-2 rounded w-full"
             />
             <ErrorMessage
               name="email"
               component="div"
-              className="text-red-500 text-sm mt-1"
+              className="text-red-500 text-sm"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block font-bold mb-1">
-              Password:
-            </label>
+            <label className="block font-bold mb-1">Password:</label>
             <Field
               type="password"
-              id="password"
               name="password"
-              placeholder="Enter your password"
+              value={values.password}
+              onChange={(e) => {
+                handleChange(e);
+                setFormData({ ...formData, password: e.target.value });
+              }}
               className="border border-gray-400 p-2 rounded w-full"
             />
             <ErrorMessage
               name="password"
               component="div"
-              className="text-red-500 text-sm mt-1"
+              className="text-red-500 text-sm"
             />
           </div>
 
           <button
             type="submit"
-            disabled={isSubmitting}
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
           >
-            {isSubmitting ? "Registering..." : "Register"}
+            Register
           </button>
         </Form>
       )}
