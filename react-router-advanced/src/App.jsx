@@ -3,7 +3,7 @@ import Profile from './components/Profile'
 import ProfileDetails from './components/ProfileDetails'
 import ProfileSettings from './components/ProfileSettings'
 import PostsList from './components/PostLists'
-import PostDetails from './components/PostDetails'
+import BlogPost from './components/PostDetails'
 import './App.css'
 import { AuthProvider } from './AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -17,7 +17,7 @@ function App() {
           <Route path="/profile/details" element={<ProfileDetails />} />
           <Route path="/profile/settings" element={<ProfileSettings />} />
           <Route path="/posts" element={<PostsList />} />
-          <Route path="/posts/:id" element={<PostDetails />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
           <Route
             path="/profile"
             element={

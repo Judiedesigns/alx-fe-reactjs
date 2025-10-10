@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProfileDetails = () => {
+const BlogPost = () => {
   return (
     <div>
       <h3>👤 Profile Details</h3>
@@ -10,4 +10,4 @@ const ProfileDetails = () => {
   );
 };
 
-export default ProfileDetails;
+export default BlogPost;
