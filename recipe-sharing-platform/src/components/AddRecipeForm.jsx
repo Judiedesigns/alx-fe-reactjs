@@ -4,22 +4,23 @@ const AddRecipeForm = () => {
     const [title, setTitle] = useState("");
     const [ingredients, setIngredients] = useState("");
     const [preparationSteps, setPreparationSteps] = useState("");
+    const [errors, setErrors] = useState(false);
 
-    const handleSubmit = (event) => {
+    const validate = (event) => {
         event.preventDefault();
 
         if (title.trim() === "") {
-            alert("Enter a title or I deck you.");
+            setErrors(true);
             return;
         }
 
         if (ingredients.trim() === "") {
-            alert("Enter ingredients or I deck you.");
+            setErrors(true);
             return;
         }
         
         if (preparationSteps.trim() === "") {
-            alert("Enter preparation steps or I deck you.");
+            setErrors(true);
             return;
         }
 
@@ -27,7 +28,7 @@ const AddRecipeForm = () => {
     };
 
     return (
-        <form className="flex flex-col gap-4 max-w-lg mx-auto" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-4 max-w-lg mx-auto" onSubmit={validate}>
             <div>
                 <label className="block mb-2 font-bold">Recipe Title: <span className="text-red-500">*</span></label>
                 <input 
@@ -59,6 +60,7 @@ const AddRecipeForm = () => {
                     onChange={(e) => setPreparationSteps(e.target.value)}
                 ></textarea>
             </div>
+            {errors && <p className="text-red-500">Please fill in all required fields.</p>}
             <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded w-fit mx-auto hover:bg-blue-800">Add Recipe</button>
         </form>
     );
