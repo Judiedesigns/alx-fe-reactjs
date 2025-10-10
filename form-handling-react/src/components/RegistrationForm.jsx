@@ -11,11 +11,14 @@ const validationSchema = Yup.object({
 });
 
 const FormikForm = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useState({
+        username: username,
+        email: email,
+        password: password,
+    });
 
   return (
     <Formik
@@ -34,11 +37,12 @@ const FormikForm = () => {
             <Field
               type="text"
               name="username"
-              value={values.username}
-              onChange={(e) => {
-                handleChange(e);
-                setFormData({ ...formData, username: e.target.value });
-              }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            //   onChange={(e) => {
+            //     handleChange(e);
+            //     setFormData({ ...formData, username: e.target.value });
+            //   }}
               className="border border-gray-400 p-2 rounded w-full"
             />
             <ErrorMessage
@@ -53,11 +57,12 @@ const FormikForm = () => {
             <Field
               type="email"
               name="email"
-              value={values.email}
-              onChange={(e) => {
-                handleChange(e);
-                setFormData({ ...formData, email: e.target.value });
-              }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            //   onChange={(e) => {
+            //     handleChange(e);
+            //     setFormData({ ...formData, email: e.target.value });
+            //   }}
               className="border border-gray-400 p-2 rounded w-full"
             />
             <ErrorMessage
@@ -72,11 +77,12 @@ const FormikForm = () => {
             <Field
               type="password"
               name="password"
-              value={values.password}
-              onChange={(e) => {
-                handleChange(e);
-                setFormData({ ...formData, password: e.target.value });
-              }}
+              value={password}
+            //   onChange={(e) => {
+            //     handleChange(e);
+            //     setFormData({ ...formData, password: e.target.value });
+            //   }}
+              onChange={(e) => setPassword(e.target.value)}
               className="border border-gray-400 p-2 rounded w-full"
             />
             <ErrorMessage
