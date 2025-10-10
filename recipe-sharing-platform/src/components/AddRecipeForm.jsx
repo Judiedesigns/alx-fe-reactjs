@@ -28,7 +28,7 @@ const AddRecipeForm = () => {
     return (
         <form className="flex flex-col gap-4 md:max-w-lg w-full mx-auto border p-2 rounded-lg shadow:md" onSubmit={handleSubmit}>
             <div className="flex flex-col">
-                <label className="mb-2 text-left">Recipe Title: <span className="text-red-500">*</span></label>
+                <label className="mb-2 text-left font-bold">Recipe Title: <span className="text-red-500">*</span></label>
                 <input 
                     type="text" 
                     placeholder="Enter recipe title" 
@@ -40,7 +40,7 @@ const AddRecipeForm = () => {
                 {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
             </div>
             <div className="flex flex-col">
-                <label className="text-left mb-2">Ingredients:</label>
+                <label className="text-left mb-2 font-bold">Ingredients:</label>
                 <textarea 
                     placeholder="Enter Ingredients" 
                     className="border p-2 border-black outline-none focus:border-red-600 resize-none" 
@@ -51,7 +51,7 @@ const AddRecipeForm = () => {
                 {errors.ingredients && <p className="text-red-500 text-sm">{errors.ingredients}</p>}
             </div>
             <div className="flex flex-col">
-                <label className="text-left mb-2">Preparation Steps:</label>
+                <label className="text-left mb-2 font-bold">Preparation Steps:</label>
                 <textarea 
                     placeholder="Enter Preparation Steps" 
                     className="border p-2 border-black outline-none focus:border-red-600 resize-none" 
